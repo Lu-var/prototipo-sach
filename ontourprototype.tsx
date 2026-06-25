@@ -1,3 +1,53 @@
+/*
+PROMPT ORIGINAL DE GENERACION
+---------------------------------------
+Necesito crear un prototipo web de resolución media para una plataforma llamada “On Tour - Gestión de Giras de Estudio”.
+
+Contexto:
+La agencia de viajes On Tour vende paquetes turísticos para giras de estudio. Actualmente los apoderados no tienen información clara sobre contratos, pagos, saldos, seguros ni documentos. La agencia necesita una plataforma que permita transparentar el proceso, mostrar avances de pago, administrar contratos, subir documentos, registrar depósitos y generar reportes.
+
+Actores:
+- Apoderado
+- Representante del curso
+- Ejecutivo de ventas
+- Dueño de la agencia
+- Administrador
+
+Diseña un prototipo web con navegación incluida y estilo limpio, institucional y fácil de usar.
+
+Pantallas necesarias:
+1. Login
+2. Dashboard Apoderado
+3. Estado de cuenta del alumno
+4. Contrato y servicios contratados
+5. Seguros y descarga de póliza
+6. Dashboard Ejecutivo
+7. Registrar contrato
+8. Registrar depósito
+9. Subir documentos
+10. Gestionar seguros
+11. Dashboard Dueño con reporte de avance por colegio
+12. Panel de administración
+
+Requisitos visuales:
+- Barra lateral de navegación
+- Tarjetas de resumen
+- Tablas simples
+- Barra de progreso de meta
+- Botones claros: Ver detalle, Descargar PDF, Registrar depósito, Subir documento, Notificar
+- Diseño de media resolución, no demasiado básico ni completamente final
+- Usar colores relacionados con turismo, confianza y profesionalismo: azul, blanco y verde suave
+
+Flujo de navegación:
+Login → Dashboard según rol.
+Apoderado → Estado de cuenta / Contrato / Seguros.
+Ejecutivo → Registrar contrato / Registrar depósito / Subir documentos / Gestionar seguros.
+Dueño → Reportes de avance.
+Administrador → Mantención de usuarios, clientes, destinos, actividades y aseguradoras.
+
+Genera el prototipo con componentes reutilizables y navegación entre pantallas.
+*/
+
 import React, { useState } from 'react';
 import { 
   Home, 

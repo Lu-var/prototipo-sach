@@ -324,7 +324,7 @@ function tramiteDetailView() {
     </div>`
   ).join("");
 
-  const disableActions = t.estado === "aprobado" || t.estado === "rechazado";
+
 
   return `<div class="space-y-6">
     <div class="flex items-center justify-between">
@@ -373,8 +373,8 @@ function tramiteDetailView() {
     <div class="card card-pad space-y-4">
       <h3 style="font-weight:600;padding-bottom:8px;border-bottom:1px solid #e2e8f0;">Acciones de Validación</h3>
       <div class="flex flex-wrap gap-2">
-        <button class="btn btn-emerald" onclick="action('aprobar')" ${disableActions ? "disabled" : ""}>Aprobar Trámite</button>
-        <button class="btn btn-red" onclick="action('rechazar')" ${disableActions ? "disabled" : ""}>Rechazar Trámite</button>
+        <button class="btn btn-emerald" onclick="action('aprobar')">Aprobar Trámite</button>
+        <button class="btn btn-red" onclick="action('rechazar')">Rechazar Trámite</button>
       </div>
       <div class="grid-2">
         <div><label class="field-label">Control SAG</label>
@@ -433,11 +433,12 @@ function action(type, value) {
     }
     case "aprobar":
     case "rechazar": {
-      const t = state.tramites.find(x => x.id === state.selectedId);
-      if (!t) break;
-      t.estado = type === "aprobar" ? "aprobado" : "rechazado";
-      t.historial.push({ fecha: now(), accion: `Trámite ${type === "aprobar" ? "aprobado" : "rechazado"}`, usuario: MOCK_FUNCIONARIO.nombre });
-      break;
+      // Shortcut: set both controls to the chosen outcome, then let the
+      // control handler derive the final estado from a single source of truth.
+      const resultado = type === "aprobar" ? "aprobado" : "rechazado";
+      action("controlSag", resultado);
+      action("controlPdi", resultado);
+      return; // render() already called inside the recursive calls
     }
     case "controlSag":
     case "controlPdi": {
@@ -446,9 +447,11 @@ function action(type, value) {
       const control = type === "controlSag" ? "sag" : "pdi";
       t.controles[control] = value;
       t.historial.push({ fecha: now(), accion: `Control ${control.toUpperCase()} ${value === "aprobado" ? "aprobado" : value === "rechazado" ? "rechazado" : "marcado como pendiente"}`, usuario: MOCK_FUNCIONARIO.nombre });
+      // Derive estado from controls — single source of truth
       if (t.controles.sag === "rechazado" || t.controles.pdi === "rechazado") t.estado = "rechazado";
       else if (t.controles.sag === "aprobado" && t.controles.pdi === "aprobado") t.estado = "aprobado";
-      else if ((t.controles.sag !== "pendiente" || t.controles.pdi !== "pendiente") && t.estado === "pendiente") t.estado = "en_revision";
+      else if (t.controles.sag === "pendiente" && t.controles.pdi === "pendiente") t.estado = "pendiente";
+      else t.estado = "en_revision";
       break;
     }
   }

@@ -5,6 +5,17 @@ Se aplica Versionamiento Semántico (MAJOR.MINOR.PATCH).
 
 ---
 
+## [v0.5.0] — 2026-06-25
+
+### Corregido
+- `prototipo.html`: corregido comportamiento inconsistente del sistema de aprobación de trámites.
+  - Los botones "Aprobar Trámite" y "Rechazar Trámite" ahora actúan como atajos que establecen ambos controles (SAG y PDI) al resultado elegido, en lugar de escribir directamente sobre el estado del trámite.
+  - Eliminado el bloqueo permanente de los botones: ya no quedan deshabilitados de forma irreversible tras una aprobación o rechazo.
+  - El estado del trámite ahora se deriva exclusivamente del estado de los controles SAG/PDI (fuente única de verdad), cubriendo los cuatro casos posibles: `pendiente`, `en_revision`, `aprobado` y `rechazado`.
+  - Corregido caso en que ambos controles volvían a `pendiente` pero el estado del trámite permanecía en su valor anterior.
+
+---
+
 ## [v0.4.0] — 2026-06-25
 
 ### Agregado
